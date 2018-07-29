@@ -13,7 +13,7 @@ class CreateRepliesTable extends Migration
      */
     public function up()
     {
-        Schema::create('repies', function (Blueprint $table) {
+        Schema::create('replies', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('thread_id')->index();
             $table->foreign('thread_id')->references('id')->on('threads')->onDelete('cascade');
