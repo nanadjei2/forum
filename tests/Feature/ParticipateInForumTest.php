@@ -17,12 +17,11 @@ class ParticipateInForumTest extends TestCase
      */
     public function unauthenticated_users_may_not_add_replies() {
     	$this->expectException('Illuminate\Auth\AuthenticationException');
-    	$thread = factory('App\Thread')->create();
     	// Given we have a reply.
-    	$reply = factory('App\Reply')->create();
+    	$reply = factory('App\Reply')->make();
     	// The user submits a reply.
     	// $this->post('threads/'.$thread->id.'/replies', $reply->toArray()); also works
-    	$this->post($thread->path().'/replies', $reply->toArray());
+    	$this->post('threads/1/replies', $reply->toArray());
     }
     /**
      * A user can participate in a forum
@@ -37,7 +36,7 @@ class ParticipateInForumTest extends TestCase
     	// Given we have a thread.
     	$thread = factory('App\Thread')->create();
     	// Given we have a reply.
-    	$reply = factory('App\Reply')->create();
+    	$reply = factory('App\Reply')->make();
     	// The user submits a reply.
     	// $this->post('threads/'.$thread->id.'/replies', $reply->toArray()); also works
     	$this->post($thread->path().'/replies', $reply->toArray());
