@@ -12,5 +12,8 @@
 */
 
 Auth::routes();
+Route::get('/', function(){
+	return view('welcome');
+});
 Route::resource('/threads', 'ThreadsController');
 Route::post('/threads/{thread}/replies', 'RepliesController@store');

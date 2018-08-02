@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-	// protected $guarded = [];
+	protected $guarded = [];
 	// Return the full path to the resource
     public function path() 
     {
