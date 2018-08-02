@@ -16,4 +16,4 @@ Route::get('/', function(){
 	return view('welcome');
 });
 Route::resource('/threads', 'ThreadsController');
-Route::post('/threads/{thread}/replies', 'RepliesController@store');
+Route::post('/threads/{thread}/replies', 'RepliesController@store')->name('add_reply_to_thread');
