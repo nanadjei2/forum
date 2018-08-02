@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+	// protected $guarded = [];
 	// Return the full path to the resource
     public function path() 
     {
@@ -16,5 +17,17 @@ class Thread extends Model
     public function replies()
     {
     	return $this->hasMany(Reply::class, 'thread_id');
+    }
+
+    //	An instance of a User who created a thread
+    public function creator()
+    {
+    	return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Add a reply to a thread
+    public function addReply(array $reply)
+    {
+    	return $this->replies()->create($reply);
     }
 }
