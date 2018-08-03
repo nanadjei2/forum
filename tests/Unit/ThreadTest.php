@@ -38,6 +38,18 @@ class ThreadTest extends TestCase
     	$this->assertCount(1, $this->thread->replies);
     }
 
+      /**
+     * A guest may not create thread
+     *  @test
+     * @return void
+     */
+      public function an_unauthenticated_user_may_not_create_thread()
+      {
+          $this->expectException('Illuminate\Auth\AuthenticationException');
+          $thread = factory('App\Thread')->raw(); // Produces an array response instead of an object
+          $this->post('/threads', $thread); // Hence there is no need for $thread->toArray();
+      }
+
     /**
      * Authenticated user can create a thread
      *  @test
@@ -46,9 +58,12 @@ class ThreadTest extends TestCase
     public function an_authenticated_user_can_create_a_thread()
     {
     	// Given we hava a signed in user
-    	// $this->actingAs(factory('App\User')->create())
+    	$this->actingAs(factory('App\User')->create());
     	// Then we hit the endpoint to create a new thread
+        $thread = factory('App\Thread')->make(); // Create in memory
+        $this->post('/threads', $thread->toArray());
     	// Then, when we visit the thread page.
+        $visitThread = $this->get($thread->path())->assertSee($thread->title)->assertSee($thread->body);
     	// We should see the new thread
     }
 }
