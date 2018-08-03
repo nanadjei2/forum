@@ -58,9 +58,9 @@ class ThreadTest extends TestCase
     public function an_authenticated_user_can_create_a_thread()
     {
     	// Given we hava a signed in user
-    	$this->actingAs(factory('App\User')->create());
+    	$this->signIn();
     	// Then we hit the endpoint to create a new thread
-        $thread = factory('App\Thread')->make(); // Create in memory
+        $thread = make('App\Thread'); // Create in memory
         $this->post('/threads', $thread->toArray());
     	// Then, when we visit the thread page.
         $visitThread = $this->get($thread->path())->assertSee($thread->title)->assertSee($thread->body);
