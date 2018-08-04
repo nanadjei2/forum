@@ -39,9 +39,10 @@ class ThreadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
         Thread::create([
             'user_id'   =>  auth()->id(),
+            'channel_id'    =>  $request->channel_id,
             'title'     =>  $request->title,
             'body'      =>  $request->body
         ]);
