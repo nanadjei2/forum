@@ -38,7 +38,7 @@ class ReadThreadsTest extends TestCase
     }
 
     /**
-     * a user can view replies of a particular resource
+     * A user can view replies of a particular resource
      * @test
      * @return void
      */
