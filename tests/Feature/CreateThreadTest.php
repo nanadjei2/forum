@@ -39,4 +39,35 @@ class CreateThreadTest extends TestCase
         $visitThread = $this->get($thread->path())->assertSee($thread->title)->assertSee($thread->body);
         // We should see the new thread
     }
+
+    /**
+     * Title, Body validation errors
+     *  @test
+     * @return void
+     */   
+    public function a_thread_requires_title_body()
+    {
+       $this->publishThread(['title' => null, 'body' => null])
+            ->assertSessionHasErrors('title')
+            ->assertSessionHasErrors('body');
+    }
+
+     /**
+     * Title, Body validation errors
+     *  @test
+     * @return void
+     */   
+     public function a_channel_requires_a_valid_channel_id()
+     {
+         $channel = factory('App\Channel', 2)->create();
+         $this->publishThread(['channel_id' => null ?:98797])->assertSessionHasErrors('channel_id');
+     }
+
+    // *********************** Helper Methods ****************
+    public function publishThread(array $overrides)
+    {
+        $this->withExceptionHandling()->signIn();
+        $thread = make('App\Thread', $overrides);
+        return $this->post(route('threads.store'), $thread->toArray());
+    }
 }

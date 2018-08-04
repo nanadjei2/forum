@@ -8,6 +8,11 @@ class Thread extends Model
 {
 	protected $guarded = [];
 	// Return the full path to the resource
+    public static $rules = [
+            'title' => 'required',
+            'body'  =>  'required',
+            'channel_id'    =>  'required|exists:channels,id'
+        ];
     public function path() 
     {
         return url('/')."/threads/{$this->channel->slug}/{$this->id}";
