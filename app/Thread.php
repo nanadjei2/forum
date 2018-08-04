@@ -10,7 +10,7 @@ class Thread extends Model
 	// Return the full path to the resource
     public function path() 
     {
-    	return url('/') . '/threads/' . $this->id;
+        return url('/')."/threads/{$this->channel->slug}/{$this->id}";
     }
 
     // Thread replies

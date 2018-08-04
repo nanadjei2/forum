@@ -21,14 +21,14 @@ class ParticipateInForumTest extends TestCase
     	$reply = factory('App\Reply')->make();
     	// The user submits a reply.
     	// $this->post('threads/'.$thread->id.'/replies', $reply->toArray()); also works
-    	$this->post('threads/1/replies', $reply->toArray());
+    	$this->post('threads/some-channel/1/replies', $reply->toArray());
     }
     /**
      * A user can participate in a forum
      * @test
      * @return void
      */
-    public function an_authenticated_user_may_participate_in_forum_threads()
+    public function authenticated_user_may_participate_in_forum_threads()
     {
     	// Given we have an authenticated user.
     	$user = factory('App\User')->create();

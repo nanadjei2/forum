@@ -24,7 +24,7 @@
     <div class="row justify-content-center">
       @auth
         <div class="col-8">
-          <form action="{{ route('add_reply_to_thread', $thread->id) }}" method="POST">
+          <form action="{{ route('add_reply_to_thread', [$thread->channel_id, $thread->id]) }}" method="POST">
             {{ csrf_field() }} {{ method_field('POST') }}
             <div class="form-group">
               <textarea class="form-control" placeholder="Have something  to say ?" name="body" id="" cols="6" rows="6" required=""></textarea>

@@ -18,7 +18,7 @@ class CreateThreadsTable extends Migration
             $table->unsignedInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('restrict');
             $table->unsignedInteger('channel_id')->index();
-            $table->foreign('channel_id')->references('id')->on('channels')->onDelete('restrict');
+            //$table->foreign('channel_id')->references('id')->on('channels')->onDelete('restrict');
             $table->string('title');
             $table->text('body');
             $table->timestamps();

@@ -24,7 +24,7 @@ class ThreadTest extends TestCase
     public function a_thread_can_make_a_string_path()
     {
         $thread = create('App\Thread');
-        $this->assertEquals('/threads/' . $thread->channel->slug . '/' .$thread->id, $thread->path());
+        $this->assertEquals(url('/') . "/threads/{$thread->channel->slug}/{$thread->id}", $thread->path());
     }
 
     /**
@@ -50,34 +50,6 @@ class ThreadTest extends TestCase
     	$this->assertCount(1, $this->thread->replies);
     }
 
-      /**
-     * A guest may not create thread
-     *  @test
-     * @return void
-     */
-      public function unauthenticated_user_may_not_create_thread()
-      {
-          $this->expectException('Illuminate\Auth\AuthenticationException');
-          $thread = factory('App\Thread')->raw(); // Produces an array response instead of an object
-          $this->post('/threads', $thread); // Hence there is no need for $thread->toArray();
-      }
-
-    /**
-     * Authenticated user can create a thread
-     *  @test
-     * @return void
-     */
-    public function authenticated_user_can_create_a_thread()
-    {
-    	// Given we hava a signed in user
-    	$this->signIn();
-    	// Then we hit the endpoint to create a new thread
-        $thread = make('App\Thread'); // Create in memory
-        $this->post('/threads', $thread->toArray());
-    	// Then, when we visit the thread page.
-        $visitThread = $this->get($thread->path())->assertSee($thread->title)->assertSee($thread->body);
-    	// We should see the new thread
-    }
     /**
      * Guest may not create thread
      *  @test

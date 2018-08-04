@@ -40,11 +40,11 @@ class ThreadsController extends Controller
      */
     public function store(Request $request)
     { 
-        Thread::create([
-            'user_id'   =>  auth()->id(),
+        $thread = Thread::create([
+            'user_id'       =>  auth()->id(),
             'channel_id'    =>  $request->channel_id,
-            'title'     =>  $request->title,
-            'body'      =>  $request->body
+            'title'         =>  $request->title,
+            'body'          =>  $request->body
         ]);
         return back();
     }
@@ -55,7 +55,7 @@ class ThreadsController extends Controller
      * @param  \App\thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(thread $thread)
+    public function show($channelId, Thread $thread)
     {
         return view('threads.show', ['thread' => $thread]);
     }
@@ -66,7 +66,7 @@ class ThreadsController extends Controller
      * @param  \App\thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function edit(thread $thread)
+    public function edit(Thread $thread)
     {
         //
     }
@@ -78,7 +78,7 @@ class ThreadsController extends Controller
      * @param  \App\thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, thread $thread)
+    public function update(Request $request, Thread $thread)
     {
         //
     }
@@ -89,7 +89,7 @@ class ThreadsController extends Controller
      * @param  \App\thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(thread $thread)
+    public function destroy(Thread $thread)
     {
         //
     }

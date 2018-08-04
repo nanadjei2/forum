@@ -14,6 +14,7 @@ class ReadThreadsTest extends TestCase
 	{
 		parent::setUp();
 		$this->thread = $thread = factory('App\Thread')->create();
+        $this->channel = $channel = factory('App\Channel')->create();
 	}
     /**
      * A basic test example.
@@ -22,7 +23,7 @@ class ReadThreadsTest extends TestCase
      */
     public function a_user_can_view_all_threads()
     {
-     	$response = $this->get('/threads');
+     	$response = $this->get(route('threads.index'));
         $response->assertSee($this->thread->title);
     }
     /**
@@ -32,7 +33,7 @@ class ReadThreadsTest extends TestCase
      */
     public function a_user_can_read_a_single_thread()
     {
-        $response = $this->get('/threads/'. $this->thread->id);
+        $response = $this->get(route('threads.show', [$this->channel->id, $this->thread->id]));
         $response->assertSee($this->thread->title);
     }
 
@@ -41,10 +42,10 @@ class ReadThreadsTest extends TestCase
      * @test
      * @return void
      */
-   public function a_user_can_read_replies_that_are_associated_with_a_thred()
+   public function a_user_can_read_replies_that_are_associated_with_a_thread()
    {
    		$reply = factory('App\Reply')->create(['thread_id' => $this->thread->id]);
-   		$response = $this->get('/threads/'. $this->thread->id);
+   		$response = $this->get(route('threads.show', [$this->channel->id, $this->thread->id]));
    		$response->assertSee($reply->body);
    }
 }
