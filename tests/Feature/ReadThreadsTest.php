@@ -63,4 +63,17 @@ class ReadThreadsTest extends TestCase
        $this->get(route('threads.filterByChannel', $channel->slug))
             ->assertSee($threadInChannel->title)->assertDontSee($threadNotInChannel->title);
    }
+
+    /**
+     * A user can filter through a thread by any username
+     * @test
+     * @return void
+     */
+    public function a_user_can_filter_threads_by_any_username()
+    {
+      $user = $this->signIn(create('App\User', ['name' => 'JohnDoe']));
+      $threadByJohn = create('App\Thread', ['user_id' => auth()->id(), 'channel_id' => 3]);
+      $threadNotByJohn = create('App\Thread', ['channel_id' => 3]);
+      $this->get('threads?by=JohnDoe')->assertSee($threadByJohn->title)->assertDontSee($threadNotByJohn->title);
+    }
 }

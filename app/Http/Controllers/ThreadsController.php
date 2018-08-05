@@ -16,15 +16,21 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(\App\Channel $channel)
+    public function index(Request $request, \App\Channel $channel)
     {
         if($channel->exists) {
             // $channelId = \App\Channel::whereSlug($channel->slug)->first()->id;
             // $threads = Thread::where('channel_id', $channelId)->latest()->get();
-            $threads = $channel->threads()->latest()->get();
+            $threads = $channel->threads()->latest();
         } else {
-            $threads = Thread::latest()->get();            
+            $threads = Thread::latest();            
         }
+        // if request('by'), we should filter by the given username.
+        if($username = $request->get('by')) {
+            $user = \App\User::where('name', $username)->firstOrFail();
+            $threads = $threads->where('user_id', $user->id);
+        }
+        $threads = $threads->get();
         return view('threads.index')->with('threads', $threads);
     }
 
