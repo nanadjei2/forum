@@ -57,7 +57,7 @@ class ThreadTest extends TestCase
      */
     public function a_guest_may_not_see_the_create_thread_page() 
     {
-        $this->withExceptionHandling()->get('/threads/create')->assertRedirect('/login');
+        $this->withExceptionHandling()->get(route('threads.create'))->assertRedirect('/login');
     }
     /**
      * A thread belongs to a channel

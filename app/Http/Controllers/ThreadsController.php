@@ -16,9 +16,15 @@ class ThreadsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\App\Channel $channel)
     {
-        $threads = Thread::latest()->get();
+        if($channel->exists) {
+            // $channelId = \App\Channel::whereSlug($channel->slug)->first()->id;
+            // $threads = Thread::where('channel_id', $channelId)->latest()->get();
+            $threads = $channel->threads()->latest()->get();
+        } else {
+            $threads = Thread::latest()->get();            
+        }
         return view('threads.index')->with('threads', $threads);
     }
 
@@ -47,7 +53,7 @@ class ThreadsController extends Controller
             'title'         =>  $request->title,
             'body'          =>  $request->body
         ]);
-        return back();
+        return redirect($thread->path());
     }
 
     /**

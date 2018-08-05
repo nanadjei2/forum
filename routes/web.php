@@ -16,10 +16,11 @@ Route::get('/', function(){
 	return view('welcome');
 });
 
-Route::get('threads', 'ThreadsController@index');
 Route::get('threads', 'ThreadsController@index')->name('threads.index');
 Route::get('threads/create', 'ThreadsController@create')->name('threads.create');
+Route::get('threads/{channel}', 'ThreadsController@index')->name('threads.filterByChannel');
 Route::get('threads/{channel}/{thread}', 'ThreadsController@show')->name('threads.show');
+//Route::get('threads/{channelSlug}', 'ThreadsController@filterByChannel')->name('threads.filterByChannel');
 Route::post('threads', 'ThreadsController@store')->name('threads.store');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->name('add_reply_to_thread');
 // Route::get('threads/{channel}/{thread}', 'ThreadsController@show');

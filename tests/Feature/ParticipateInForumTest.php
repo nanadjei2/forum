@@ -55,10 +55,15 @@ class ParticipateInForumTest extends TestCase
         // Given we have a thread.
         $thread = factory('App\Thread')->create();
         // Given we have a reply.
-        $reply = factory('App\Reply')->make(['thread_id' => null ?: 8343, 'user_id' => null ?: 3458, 'body' =>  null]);
+
+        //$reply = factory('App\Reply')->make(['thread_id' => null ?: 8343, 'user_id' => null ?: 3458, 'body' =>  null]); works
+        // $this->post($thread->path().'/replies', $reply->toArray())
+        //         ->assertSessionHasErrors('thread_id')
+        //         ->assertSessionHasErrors('user_id')
+        //         ->assertSessionHasErrors('body');
+
+        $reply = factory('App\Reply')->make(['body' =>  null]); 
         $this->post($thread->path().'/replies', $reply->toArray())
-                ->assertSessionHasErrors('thread_id')
-                ->assertSessionHasErrors('user_id')
                 ->assertSessionHasErrors('body');
     }
 }

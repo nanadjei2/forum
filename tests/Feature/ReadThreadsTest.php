@@ -48,4 +48,19 @@ class ReadThreadsTest extends TestCase
    		$response = $this->get(route('threads.show', [$this->channel->id, $this->thread->id]));
    		$response->assertSee($reply->body);
    }
+
+   /**
+     * A user can filter through a channel when its tag page is visited
+     * @test
+     * @return void
+     */
+   public function a_user_can_filter_through_a_channel_when_its_tag_is_visited()
+   {
+        $this->signIn();
+       $channel = create('App\Channel');
+       $threadInChannel = create('App\Thread', ['channel_id' => $channel->id]);
+       $threadNotInChannel = create('App\Thread');
+       $this->get(route('threads.filterByChannel', $channel->slug))
+            ->assertSee($threadInChannel->title)->assertDontSee($threadNotInChannel->title);
+   }
 }

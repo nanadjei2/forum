@@ -15,8 +15,6 @@ class Reply extends Model
 
     // Validation rules when a user is replying to a thread
     public static $rules = [
-        'thread_id' =>  'required|exists:threads,id',
-        'user_id'   =>  'required|exists:users,id',
         'body'      =>  'required'
     ];
 }
