@@ -23,6 +23,5 @@ Route::get('threads/{channel}/{thread}', 'ThreadsController@show')->name('thread
 //Route::get('threads/{channelSlug}', 'ThreadsController@filterByChannel')->name('threads.filterByChannel');
 Route::post('threads', 'ThreadsController@store')->name('threads.store');
 Route::post('/threads/{channel}/{thread}/replies', 'RepliesController@store')->name('add_reply_to_thread');
-// Route::get('threads/{channel}/{thread}', 'ThreadsController@show');
-// Route::resource('/threads', 'ThreadsController')->except(['show']);
+Route::post('/replies/{reply}/favorites', 'FavoritesController@store');
 // 
