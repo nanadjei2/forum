@@ -18,19 +18,7 @@ class ThreadsController extends Controller
      */
     public function index(Request $request, \App\Channel $channel)
     {
-        if($channel->exists) {
-            // $channelId = \App\Channel::whereSlug($channel->slug)->first()->id;
-            // $threads = Thread::where('channel_id', $channelId)->latest()->get();
-            $threads = $channel->threads()->latest();
-        } else {
-            $threads = Thread::latest();            
-        }
-        // if request('by'), we should filter by the given username.
-        if($username = $request->get('by')) {
-            $user = \App\User::where('name', $username)->firstOrFail();
-            $threads = $threads->where('user_id', $user->id);
-        }
-        $threads = $threads->get();
+        $threads = $this->getThreads($request, $channel);
         return view('threads.index')->with('threads', $threads);
     }
 
@@ -105,5 +93,21 @@ class ThreadsController extends Controller
     public function destroy(Thread $thread)
     {
         //
+    }
+
+    protected function getThreads(Request $request, $channel) {
+        if($channel->exists) {
+            // $channelId = \App\Channel::whereSlug($channel->slug)->first()->id;
+            // $threads = Thread::where('channel_id', $channelId)->latest()->get();
+            $threads = $channel->threads()->latest();
+        } else {
+            $threads = Thread::latest();            
+        }
+        // if request('by'), we should filter by the given username.
+        if($username = $request->get('by')) {
+            $user = \App\User::where('name', $username)->firstOrFail();
+            $threads = $threads->where('user_id', $user->id);
+        }
+        return $threads->get();
     }
 }
