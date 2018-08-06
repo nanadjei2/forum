@@ -41,5 +41,26 @@ class FavoritesTest extends TestCase
         $this->assertCount(1, $reply->favorites);
     }
 
-
+    /**
+     * An auth user may not favorite a reply more than once
+     * @test
+     * @return void
+     */
+    public function an_authenticated_user_may_only_favorite_a_reply_once()
+    {
+         // signin a user
+        $this->signin();
+        // When a reply is created
+        $reply = create('App\Reply');
+        try {
+            // Then the reply is posted to a favourate endpoint
+            $this->post('replies/'. $reply->id . '/favorites');
+            // Then the reply is posted to a favourate endpoint AGAIN
+            $this->post('replies/'. $reply->id . '/favorites');
+        } catch (\Exception $e) {
+            $this->fail('You are not expected to favorite a reply twice');
+        }
+        // If it does not exist already then save in database
+        $this->assertCount(1, $reply->favorites);
+    }
 }
