@@ -13,11 +13,14 @@
          </article> 
        </div>
      </div>
-     <br>
+    <div class="replies">
        @foreach($thread->replies as $reply)
           @include('threads.reply')
        @endforeach
-     <br>
+    </div>
+    <div class="row justify-content-center">
+      <div>{{ $replies->links() }}</div>
+    </div>
      <div class="post-reply">
       @auth
       <form action="{{ route('add_reply_to_thread', [$thread->channel_id, $thread->id]) }}" method="POST">
@@ -40,8 +43,8 @@
         <!-- <div class="card-header"><a href="#">{{ $thread->creator->name }}</a> posted: {{ $thread->title }}</div> -->
         <div class="card-body">
          <div class="card-header">
-          comments <p>This thread was published : {{ $thread->created_at->diffForHumans() }} by 
-              <a href="#">{{ $thread->creator->name }}</a>, and currently has {{ $thread->replies()->count() }} comments</p>
+          <p>This thread was published : {{ $thread->created_at->diffForHumans() }} by 
+              <a href="#">{{ $thread->creator->name }}</a>, and currently has {{ $thread->replies_count }} {{ str_plural('comment', $thread->replies_count) }}.</p>
          </div> 
        </div>
      </div>
