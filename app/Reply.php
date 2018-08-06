@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
     protected $guarded = [];
+    protected $with = ['owner', 'favorites'];
 
     // Validation rules when a user is replying to a thread
     public static $rules = [
@@ -34,6 +35,18 @@ class Reply extends Model
      */
     public function favorite() 
     {
-        return $this->favorites()->create(['user_id' => auth()->id()]);
+        $attributes = ['user_id' => auth()->id()];
+        if(! $this->favorites()->where($attributes)->exists()) {
+            return $this->favorites()->create($attributes);
+        }
+    }
+
+    /**
+     * Chech whether auth user has already favorited the reply
+     * @return boolean 
+     */
+    public function isFavorited()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->exists();
     }
 }

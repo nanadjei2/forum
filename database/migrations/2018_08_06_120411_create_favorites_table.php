@@ -20,6 +20,8 @@ class CreateFavoritesTable extends Migration
             $table->unsignedInteger('favorited_id')->index();
             $table->string('favorited_type', 50);
             $table->timestamps();
+
+            $table->unique(['user_id', 'favorited_id', 'favorited_type']);
         });
     }
 
