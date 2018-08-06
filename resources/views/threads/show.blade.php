@@ -21,7 +21,7 @@
     <div class="row justify-content-center">
       <div>{{ $replies->links() }}</div>
     </div>
-     <div class="post-reply">
+     <div class="post-reply mt-4">
       @auth
       <form action="{{ route('add_reply_to_thread', [$thread->channel_id, $thread->id]) }}" method="POST">
         {{ csrf_field() }} {{ method_field('POST') }}

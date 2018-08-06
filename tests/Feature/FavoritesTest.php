@@ -36,7 +36,7 @@ class FavoritesTest extends TestCase
         // When a reply is created
         $reply = create('App\Reply');
         // Then the reply is posted to a favourate endpoint
-        $this->post('replies/'. $reply->id . '/favorites');
+        $this->post(route('reply.favorites', $reply->id));
         // If it does not exist already then save in database
         $this->assertCount(1, $reply->favorites);
     }
@@ -54,9 +54,9 @@ class FavoritesTest extends TestCase
         $reply = create('App\Reply');
         try {
             // Then the reply is posted to a favourate endpoint
-            $this->post('replies/'. $reply->id . '/favorites');
+            $this->post(route('reply.favorites', $reply->id));
             // Then the reply is posted to a favourate endpoint AGAIN
-            $this->post('replies/'. $reply->id . '/favorites');
+            $this->post(route('reply.favorites', $reply->id));
         } catch (\Exception $e) {
             $this->fail('You are not expected to favorite a reply twice');
         }
