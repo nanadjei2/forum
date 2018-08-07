@@ -71,4 +71,23 @@ class CreateThreadTest extends TestCase
         $thread = make('App\Thread', $overrides);
         return $this->post(route('threads.store'), $thread->toArray());
     }
+
+     /**
+     * A user can delete theads
+     *  @test
+     * @return void
+     */   
+    public function a_user_can_delete_threads()
+    {
+        // Given we have a signed in user
+        $this->signIn();
+        // When the user hits an endpoint to delete a thread
+        $thread = create('App\Thread'); // Create a thread
+        $reply = create('App\Reply', ['thread_id' => $thread->id]); // Create a reply associated with the thread.
+        $response = $this->json('DELETE', $thread->path());
+        // There thread should be deleted from the database.
+        $this->assertDatabaseMissing('threads', ['id' => $thread->id]); // Delete the thread from the DB
+        $this->assertDatabaseMissing('replies', ['id' => $reply->id]); // Delete the replies associated with the thread as well.
+        $response->assertStatus(204);
+    }
 }

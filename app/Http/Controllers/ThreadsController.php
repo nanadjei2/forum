@@ -92,9 +92,11 @@ class ThreadsController extends Controller
      * @param  \App\thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
-        //
+        //$thread->replies()->delete(); //  Works fine buh thread model can do that automatically on Delete.
+        $thread->delete();
+        return response([], 204);
     }
 
     protected function getThreads(Request $request, $channel) {

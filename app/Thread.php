@@ -15,10 +15,13 @@ class Thread extends Model
         // In this case you can disable these queries by doing:
         // $thread = Thread::withoutGlobalScopes()->first();
         static::addGlobalScope('creator', function($builder) {
-            $builder->with('creator');
+            return $builder->with('creator');
         });
         static::addGlobalScope('replyCount', function($builder) {
-            $builder->withCount('replies');
+            return $builder->withCount('replies');
+        });
+        static::deleting(function($thread) {
+            return $thread->replies()->delete();
         });
     }
 
