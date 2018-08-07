@@ -7,11 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
 	protected $guarded = [];
-    protected $with = ['channel', 'creator'];
+    protected $with = ['channel'];
 
     protected static function boot()
     {
         parent::boot();
+        // In this case you can disable these queries by doing:
+        // $thread = Thread::withoutGlobalScopes()->first();
+        static::addGlobalScope('creator', function($builder) {
+            $builder->with('creator');
+        });
         static::addGlobalScope('replyCount', function($builder) {
             $builder->withCount('replies');
         });
@@ -62,7 +67,7 @@ class Thread extends Model
         return $this->belongsTo(Channel::class, 'channel_id');
     }
 
-    // Custome replyCountAttribute to count replies
+    // Custom replyCountAttribute to count replies
     public function getReplyCountAttribute()
     {
         return $this->replies()->count();

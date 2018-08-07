@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
     protected $guarded = [];
-    protected $with = ['owner', 'favorites'];
+    protected $with = ['owner', 'favorites']; // For eagerloadings
 
     // Validation rules when a user is replying to a thread
     public static $rules = [
@@ -47,6 +47,14 @@ class Reply extends Model
      */
     public function isFavorited()
     {
-        return $this->favorites()->where('user_id', auth()->id())->exists();
+        // For the perpose of eager loading.
+        // return $this->favorites()->where('user_id', auth()->id())->exists();
+        return !! $this->favorites->where('user_id', auth()->id())->count();
+    }
+
+     // Custom FavoritesCount 
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
     }
 }

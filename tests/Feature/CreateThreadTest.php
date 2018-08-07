@@ -13,6 +13,7 @@ class CreateThreadTest extends TestCase
      /**
      * A guest may not create thread
      *  @test
+     *  Middleware
      * @return void
      */
       public function unauthenticated_user_may_not_create_thread()

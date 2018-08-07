@@ -13,6 +13,7 @@ class ParticipateInForumTest extends TestCase
 	 /**
      * A user can participate in a forum
      * @test
+     * Middeware
      * @return void
      */
     public function unauthenticated_users_may_not_add_replies() {

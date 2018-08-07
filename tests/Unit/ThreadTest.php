@@ -53,6 +53,7 @@ class ThreadTest extends TestCase
     /**
      * Guest may not create thread
      *  @test
+     *  Middleware
      * @return void
      */
     public function a_guest_may_not_see_the_create_thread_page() 

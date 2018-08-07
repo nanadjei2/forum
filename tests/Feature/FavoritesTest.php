@@ -14,6 +14,7 @@ class FavoritesTest extends TestCase
     /**
      * guest users can not favorite anything.
      * @test
+     * Middleware
      * @return void
      */
     public function guests_can_not_favorite_anything()
