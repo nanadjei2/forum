@@ -73,6 +73,21 @@ class CreateThreadTest extends TestCase
     }
 
      /**
+     * Guest users cannot delete threads
+     *  @test
+     * @return void
+     */   
+    public function guest_users_cannot_delete_threads()
+    {
+        // $this->expectException('Illuminate\Auth\AuthenticationException'); Works fine
+        $this->withExceptionHandling();
+        // When the user hits an endpoint to delete a thread
+        $thread = create('App\Thread'); // Create a thread
+        $reply = create('App\Reply', ['thread_id' => $thread->id]); // Create a reply associated with the thread.
+        $response = $this->delete($thread->path())->assertRedirect('/login');
+    }
+
+     /**
      * A user can delete theads
      *  @test
      * @return void

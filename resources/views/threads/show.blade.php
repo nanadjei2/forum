@@ -5,7 +5,20 @@
   <div class="row justify-content-left">
     <div class="col-8">
       <div class="card">
-        <div class="card-header"><a href="{{ route('profiles.show', $thread->creator->name) }}">{{ $thread->creator->name }}</a> posted: {{ $thread->title }}</div>
+        <div class="card-header flex">
+          <div class="thread-info flex-1">
+              <a href="{{ route('profiles.show', $thread->creator->name) }}">
+                {{ $thread->creator->name }}
+              </a> 
+              posted: {{ $thread->title }}
+          </div>
+          <div class="delete-btn">
+            <form action="{{ route('threads.delete', [$thread->channel->id, $thread->id]) }}" method="POST">
+               {{ csrf_field() }} {{ method_field('DELETE') }}
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+          </div>
+        </div>
 
         <div class="card-body">
          <article>

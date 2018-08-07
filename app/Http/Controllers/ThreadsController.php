@@ -96,7 +96,8 @@ class ThreadsController extends Controller
     {
         //$thread->replies()->delete(); //  Works fine buh thread model can do that automatically on Delete.
         $thread->delete();
-        return response([], 204);
+        if(request()->wantsJson()) return response([], 204);
+        return redirect(route('threads.index'));
     }
 
     protected function getThreads(Request $request, $channel) {
