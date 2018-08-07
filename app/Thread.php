@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
 	protected $guarded = [];
+    protected $with = ['channel', 'creator'];
 
     protected static function boot()
     {
