@@ -17,7 +17,10 @@ class Reply extends Model
         'body'      =>  'required'
     ];
 
-    // The user who created the reply
+     /**
+     * A thread belongs to a user
+     * @return \Illuminate\Eloquent\Relationship\HasMany
+     */
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');

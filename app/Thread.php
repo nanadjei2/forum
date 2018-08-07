@@ -61,7 +61,10 @@ class Thread extends Model
     	return $this->replies()->create($reply);
     }
 
-    // Thread channel
+     /**
+     * A thread belongsTo a channel
+     * @return \Illuminate\Eloquent\Relationship\HasMany
+     */
     public function channel()
     {
         return $this->belongsTo(Channel::class, 'channel_id');
