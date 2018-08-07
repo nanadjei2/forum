@@ -5,7 +5,7 @@
   <div class="row justify-content-left">
     <div class="col-8">
       <div class="card">
-        <div class="card-header"><a href="#">{{ $thread->creator->name }}</a> posted: {{ $thread->title }}</div>
+        <div class="card-header"><a href="{{ route('profiles.show', $thread->creator->name) }}">{{ $thread->creator->name }}</a> posted: {{ $thread->title }}</div>
 
         <div class="card-body">
          <article>

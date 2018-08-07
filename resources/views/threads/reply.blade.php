@@ -2,7 +2,7 @@
 <div class="card mt-2">
     <div class="card-header flex justify-between">
         <div class="thread-owner-and-time">
-            <a href="javascript::void(0)">{{ $reply->owner->name }}</a> said {{ $reply->created_at->diffForHumans() }}...
+            <a href="{{ route('profiles.show', $thread->creator->name) }}">{{ $reply->owner->name }}</a> said {{ $reply->created_at->diffForHumans() }}...
         </div>
       <div class="favorite-btn">
           <form action="{{ route('reply.favorites', $reply->id) }}" method="POST">
