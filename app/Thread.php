@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Activity;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -22,6 +23,14 @@ class Thread extends Model
         });
         static::deleting(function($thread) {
             return $thread->replies()->delete();
+        });
+        static::created(function($thread) {
+            Activity::created([
+                'type' => 'created_thread',
+                'user_id' => auth()->id(), 
+                'subject_id' => $thread->id,
+                'subject_type' => 'App\Thread' 
+            ]);
         });
     }
 

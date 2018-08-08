@@ -11,6 +11,18 @@ class ThreadPolicy
     use HandlesAuthorization;
 
     /**
+     * Before any method of policies are implemented 
+     * run this method. In it when a user's name == the stated name,
+     * then let the person be able to implement all the polices hence "return true";
+     * @param  User   $user [description]
+     * @return [type]       [description]
+     */
+    public function before(User $user)           
+    {
+        if($user->name == 'Mr. Lonnie Koelpin Jr.') return true;
+    }
+
+    /**
      * Determine whether the user can view the thread.
      *
      * @param  \App\User  $user

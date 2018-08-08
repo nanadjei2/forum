@@ -12,11 +12,14 @@
               </a> 
               posted: {{ $thread->title }}
           </div>
+          
           <div class="delete-btn">
-            <form action="{{ route('threads.delete', [$thread->channel->id, $thread->id]) }}" method="POST">
-               {{ csrf_field() }} {{ method_field('DELETE') }}
-              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-            </form>
+            @can('update', $thread)
+              <form action="{{ route('threads.delete', [$thread->channel->id, $thread->id]) }}" method="POST">
+                 {{ csrf_field() }} {{ method_field('DELETE') }}
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            @endcan
           </div>
         </div>
 

@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header flex">
                         <div class="user-and-thread-title flex-1">
-                            <a href="#">{{ $profileUser->name }}</a> Posted: {{ $thread->title }}                    
+                            <a href="{{ route('profiles.show', $thread->creator) }}">{{ $profileUser->name }}</a> Posted: {{ $thread->title }}                    
                         </div>
                         <span class="time">{{ $thread->created_at->diffForHumans() }}</span>
                     </div>
