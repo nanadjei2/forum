@@ -95,6 +95,9 @@ class ThreadsController extends Controller
     public function destroy($channel, Thread $thread)
     {
         //$thread->replies()->delete(); //  Works fine buh thread model can do that automatically on Delete.
+        if($thread->user_id != auth()->id()) {
+            return abort(403, 'You do not have permission to do this.');
+        }
         $thread->delete();
         if(request()->wantsJson()) return response([], 204);
         return redirect(route('threads.index'));

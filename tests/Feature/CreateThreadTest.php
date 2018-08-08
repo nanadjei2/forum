@@ -77,14 +77,16 @@ class CreateThreadTest extends TestCase
      *  @test
      * @return void
      */   
-    public function guest_users_cannot_delete_threads()
+    public function unauthorised_users_cannot_delete_threads()
     {
         // $this->expectException('Illuminate\Auth\AuthenticationException'); Works fine
         $this->withExceptionHandling();
         // When the user hits an endpoint to delete a thread
         $thread = create('App\Thread'); // Create a thread
         $reply = create('App\Reply', ['thread_id' => $thread->id]); // Create a reply associated with the thread.
-        $response = $this->delete($thread->path())->assertRedirect('/login');
+        $this->delete($thread->path())->assertRedirect('/login');
+        $this->signIn();
+        $this->delete($thread->path())->assertStatus(403);
     }
 
      /**
@@ -92,12 +94,12 @@ class CreateThreadTest extends TestCase
      *  @test
      * @return void
      */   
-    public function a_user_can_delete_threads()
+    public function authorized_users_can_delete_threads()
     {
         // Given we have a signed in user
         $this->signIn();
         // When the user hits an endpoint to delete a thread
-        $thread = create('App\Thread'); // Create a thread
+        $thread = create('App\Thread', ['user_id' => auth()->id()]); // Create a thread
         $reply = create('App\Reply', ['thread_id' => $thread->id]); // Create a reply associated with the thread.
         $response = $this->json('DELETE', $thread->path());
         // There thread should be deleted from the database.
@@ -105,4 +107,14 @@ class CreateThreadTest extends TestCase
         $this->assertDatabaseMissing('replies', ['id' => $reply->id]); // Delete the replies associated with the thread as well.
         $response->assertStatus(204);
     }
+
+    //  /**
+    //  * Threads may only be deleted by those who have permission to do so
+    //  *  @test
+    //  * @return void
+    //  */   
+    // public function thread_may_only_be_deleted_by_those_who_have_permission_to_do_so()
+    // {
+    //     $this->signIn();
+    // }
 }
