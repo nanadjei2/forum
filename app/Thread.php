@@ -3,10 +3,13 @@
 namespace App;
 
 use App\Activity;
+use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
+    use RecordActivity;
+    
 	protected $guarded = [];
     protected $with = ['channel'];
 
@@ -25,14 +28,10 @@ class Thread extends Model
             return $thread->replies()->delete();
         });
         static::created(function($thread) {
-            Activity::created([
-                'type' => 'created_thread',
-                'user_id' => auth()->id(), 
-                'subject_id' => $thread->id,
-                'subject_type' => 'App\Thread' 
-            ]);
+            return $thread->recordActivity('created', $thread);
         });
     }
+    
 
 	// Return the full path to the resource
     public static $rules = [
