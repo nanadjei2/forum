@@ -86,4 +86,13 @@ class Thread extends Model
     {
         return $this->replies()->count();
     }
+
+    /**
+     * Activities of a model
+     * @return \Illuminate\Eloquent\Relashionship\MorphMany
+     */
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject');
+    }
 }

@@ -3,11 +3,12 @@
 namespace App;
 
 use App\Traits\Favoritable;
+use App\Traits\RecordActivity;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
-    use Favoritable;
+    use Favoritable, RecordActivity;
 
     protected $guarded = [];
     protected $with = ['owner', 'favorites']; // For eagerloadings
@@ -24,5 +25,14 @@ class Reply extends Model
     public function owner()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Activities of a model
+     * @return \Illuminate\Eloquent\Relashionship\MorphMany
+     */
+    public function activites()
+    {
+        return $this->morphMany(Activity::class, 'subject');
     }
 }

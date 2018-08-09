@@ -12,14 +12,14 @@ class ThreadPolicy
 
     /**
      * Before any method of policies are implemented 
-     * run this method. In it when a user's name == the stated name,
+     * run this method. In it when a user's id == the stated id or it can even be name,
      * then let the person be able to implement all the polices hence "return true";
      * @param  User   $user [description]
      * @return [type]       [description]
      */
     public function before(User $user)           
     {
-        if($user->name == 'Mr. Lonnie Koelpin Jr.') return true;
+        if($user->id == 1) return true;
     }
 
     /**
