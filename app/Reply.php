@@ -31,7 +31,7 @@ class Reply extends Model
      * Activities of a model
      * @return \Illuminate\Eloquent\Relashionship\MorphMany
      */
-    public function activites()
+    public function activities()
     {
         return $this->morphMany(Activity::class, 'subject');
     }

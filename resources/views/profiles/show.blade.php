@@ -12,20 +12,12 @@
 
             <h2 class="py-4">Created Threads</h2>
             <div class="user-threads">
-                @foreach($threads as $thread)
-                <div class="card">
-                    <div class="card-header flex">
-                        <div class="user-and-thread-title flex-1">
-                            <a href="{{ route('profiles.show', $thread->creator) }}">{{ $profileUser->name }}</a> Posted: {{ $thread->title }}                    
-                        </div>
-                        <span class="time">{{ $thread->created_at->diffForHumans() }}</span>
-                    </div>
-                    <div class="card-body">{{ $thread->body }}</div>
-                </div>
+                @foreach($activities as $activity)
+                    @include("profiles.activities.$activity->type")
                 @endforeach
             </div>
             <div class="row justify-content-center">
-                {{ $threads->links() }}
+                {{-- $threads->links() --}}
             </div>
         </div>
     </div>

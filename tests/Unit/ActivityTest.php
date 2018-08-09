@@ -39,13 +39,13 @@ class ActivityTest extends TestCase
      * @test
      * @return void
      */
-    public function it_records_activities_when_a_reply_is_created($value='')
+    public function it_records_activities_when_a_reply_is_created()
     {
         // Given we have a signed in user
         $this->signIn();
         // When the user create a thread
-        $thread = Create('App\Thread');
-        $reply = create('App\Reply', ['thread_id' => $thread->id]);
+        //$thread = Create('App\Thread');
+        $reply = create('App\Reply');
         // We expect to see in database these attributes
         $this->assertEquals(2, Activity::count());
         // $this->assertDatabaseHas('activities', [

@@ -47,4 +47,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Thread::class, 'user_id')->latest();
     }
+
+    /**
+     * User has many activities on the activities table
+     * using user_id as a foreign key
+     * @return \Illuminate\Eloquent\Relationship\HasMany 
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class, 'user_id');
+    }
 }

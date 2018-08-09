@@ -27,9 +27,11 @@ class Thread extends Model
         static::deleting(function($thread) {
             return $thread->replies()->delete();
         });
-        static::created(function($thread) {
-            return $thread->recordActivity('created', $thread);
-        });
+
+        // Works fine as well. But extracted to App\Traits\RecordActivity
+        // static::created(function($thread) {
+        //     return $thread->recordActivity('created', $thread);
+        // }); 
     }
     
 
