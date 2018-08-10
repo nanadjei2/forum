@@ -40,7 +40,6 @@ class ProfilesTest extends TestCase
         $user = create('App\User');
         $thread = create('App\Thread', ['user_id' => $user->id]);
         $activity = $thread->activities()->create(['type' => $thread, 'user_id' => auth()->id()]);
-        //dd($activity);
         // When he hits the profile endpoin he should see his name.
         $this->get(route('profiles.show', ['user' => $user->name]))
                 ->assertSee($activity->title)
