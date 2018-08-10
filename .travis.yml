@@ -7,4 +7,4 @@ php:
   - nightly
 scripts:
   - composer install
-  - vendor/bin/phpunit
+  - vendor\bin\phpunit
