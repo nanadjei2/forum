@@ -18,7 +18,7 @@ class ProfilesController extends Controller
     {
         return view('profiles.show', [
             'profileUser' => $user,
-            'activities'  => $user->activities()->with('subject')->paginate(20)
+            'activities'  => $user->activities()->latest()->with('subject')->paginate(20)
         ]);
     }
 }
